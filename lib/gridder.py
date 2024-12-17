@@ -3,15 +3,11 @@ import glob
 import pandas as pd
 import numpy as np
 
-from . import util
-
 
 class Gridder():
-    def __init__(self, gridCacheDir):
+    def __init__(self):
         self.eps = 1 # nanometer
-        self.gridCacheDir = gridCacheDir        
-        os.makedirs(self.gridCacheDir, exist_ok=True)
-
+        
     def setPositions(self, xyz):
         self.positions = xyz
         self.min = np.min(self.positions, axis=0)

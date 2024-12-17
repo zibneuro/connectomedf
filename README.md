@@ -1,60 +1,72 @@
 # Dissecting origins of wiring specificity
 
-## Setting up Python environment 
-The recommended way of setting up your local Python environment is using [conda](https://docs.conda.io/projects/conda/en/stable/user-guide/index.html).
+## Local setup
 
+### System requirements
+- Tested on a Linux system with **NVIDIA GeForce RTX 4080 (16GB)** 
+- The recommended way of setting up your local Python environments is using [conda](https://docs.conda.io/projects/conda/en/stable/user-guide/index.html).
+
+### Create Main Python Environment 
 ```
 cd <path-to-repository>
-conda create --name generative-modeling python=3.9
-conda activate generative-modeling
+conda create -n connectomedf python=3.11
+conda activate connectomedf
 pip install -r requirements.txt
-conda install pytorch
 ```
-Next, install the Jupyter kernel for running notebooks:
+Manually install a [CuPy version](https://docs.cupy.dev/en/stable/install.html) that matches your local GPU setup, e.g.:
 ```
-conda activate generative-modeling:
-pip install ipykernel
-python -m ipykernel install --user --name i --display-name "wiring-specificity"
+pip install cupy-cuda12x==13.2.0
+```
+Register the conda environment with **ipykernel** to use it from within Jupyter notebooks:
+```
+conda activate connectomedf:
+python -m ipykernel install --user --name i --display-name "connectomedf"
+```
+### Create Python Environment for Synapse Data Preprocessing (optional) 
+Requires [cuDF](https://github.com/rapidsai/cudf), which has extended GPU hardware requirements; please adjust for your local GPU setup.
+```
+cd <path-to-repository>
+conda create -n preproc python=3.11
+conda activate preproc 
+
+pip install cudf-cu11==24.6.0
+pip install ipykernel==6.29.5
+
+python -m ipykernel install --user --name i --display-name "preproc"
 ```
 
 ## Regenerating figures
-Run notebooks in the following order to regenerate figures:
-### Mouse viusal cortex dataset (VIS)
+
+Download data used in the analyses from:
+
+https://doi.org/10.5281/zenodo.14507539 
+
+(access will be granted upon request, please contact <harth@zib.de>).
+
+To regenerate the figures, run notebooks in the following order  using the connectomedf Python environment.
 ```
-VIS_synapse_preparation.ipynb 
 VIS_run_models.ipynb
 VIS_population_level.ipynb
 VIS_cellular_level.ipynb
 VIS_realizations.ipynb
 VIS_celltype_clustering.ipynb
 VIS_overlap_comparison.ipynb
-```
-### Human temporal cortex dataset (H01)
-```
+
 H01_synapse_preparation.ipynb
 H01_run_models.ipynb
 H01_population_model.ipynb
-```
-### Simulation-based inference (SBI)
-```
+
 SBI_example.ipynb
 SBI_parameter_distributions.ipynb
 ```
 
-
-## Notes
-
-### Cuda setup
-
-Show GPU utilization
+To rerun the synapse preprocessing step (i.e., spatial partitioning into overlap volumes), run the following notebooks using the preproc-Python environment.
 ```
-nvidia-smi
-ps -o user= -p <PID>
+VIS_synapse_preparation.ipynb
+H01_synapse_preparation.ipynb 
 ```
-Select GPU from code
-```
-import cupy as cp
-cp.cuda.Device(3).use()
 
-LD_LIBRARY_PATH=/software/CUDA/cuda-12.2/lib64
-```
+## Publication
+Dissecting origins of wiring specificity in dense cortical connectomes.
+Philipp Harth, Daniel Udvary, Jan Boelts, Daniel Baum, Jakob H Macke, Hans-Chrisitian Hege, Marcel Oberlaender.
+*bioRxiv* 2024.12.14.628490; doi: https://doi.org/10.1101/2024.12.14.628490
