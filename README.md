@@ -67,6 +67,6 @@ H01_synapse_preparation.ipynb
 ```
 
 ## Publication
-Dissecting origins of wiring specificity in dense cortical connectomes.
-Philipp Harth, Daniel Udvary, Jan Boelts, Daniel Baum, Jakob H Macke, Hans-Chrisitian Hege, Marcel Oberlaender.
+Dissecting origins of wiring specificity in dense reconstructions of neural tissue.
+Philipp Harth, Daniel Udvary, Jan Boelts, Jakob H Macke, Daniel Baum, Hans-Chrisitian Hege, Marcel Oberlaender.
 *bioRxiv* 2024.12.14.628490; doi: https://doi.org/10.1101/2024.12.14.628490
