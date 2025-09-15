@@ -52,10 +52,11 @@ class Statistics():
         self.mask_mapped_ids = (index_data.global_index.get_level_values("pre_id_mapped") >= 0) & (index_data.global_index.get_level_values("post_id_mapped") >= 0)
         self.masks, self.masks_inv = getMotifMasks(3)
 
-        if(num_selected_ids is not None):
-            self.motif_statistics_gpu = MotifStatisticsGPU(num_selected_ids)
-        else:
-            self.motif_statistics_gpu = MotifStatisticsGPU(index_data.num_ids_mapped)
+        if(self.enabled_motifs):
+            if(num_selected_ids is not None):
+                self.motif_statistics_gpu = MotifStatisticsGPU(num_selected_ids)
+            else:
+                self.motif_statistics_gpu = MotifStatisticsGPU(index_data.num_ids_mapped)
 
     def delete_by_model(self, model_descriptor):
         self.result = self.result.drop(self.result[self.result.model_descriptor == model_descriptor].index)
