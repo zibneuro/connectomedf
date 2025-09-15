@@ -1,5 +1,8 @@
 data
+demo_data
+demo_data.zip
 .env
 __pycache__
 cufile.log
 sbi-logs
+run_all.py
